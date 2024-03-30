@@ -1,0 +1,50 @@
+def bank() {
+    print("banking");
+    // Cache
+    doActionNode(52855, 3032, 9771, 117, 9);
+    sleep(7500);
+    // Select Orebox
+    useItem(1);
+    sleep(800);
+    // Deposit box 
+    doActionNode(25937, 1042, 4578, 128, 17);
+    sleep(2500);
+    // Leave cache
+    doActionNode(52864, 1040, 4575, 117, 9);
+    sleep(5000);
+}
+
+def invFull() {
+    var ret = getInventorySlots();
+    print("Inventory slots: " + ret.to_string());
+    return ret >= 28;
+}
+
+def loop() {
+    var totalInventories = 0;
+    var inventories = 0;
+
+    while (true) {
+        print("loop");
+        if (invFull()) {
+            print("isInvFull check");
+            inventories = inventories + 1;
+            totalInventories = totalInventories + 1;
+            if (inventories >= 4) {
+                bank();
+                inventories = 0;
+            } else {
+                sendKey(0x31);
+            }
+            print("sleep 1500");
+            sleep(1500);
+        }
+
+        print("action");
+        doActionNode(113056, 3036, 9764, 117, 9);
+        sleep(2400);
+    }
+}
+
+
+loop();
